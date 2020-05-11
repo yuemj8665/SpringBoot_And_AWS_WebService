@@ -42,9 +42,9 @@ var main = {
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data)
-        }),done(function () {
+        }).done(function () {
             alert('글이 수정되었다!');
-            window.location.href("/");
+            window.location.href = '/';
         }).fail(function (error) {
             alert(JSON.stringify(error))
         });
