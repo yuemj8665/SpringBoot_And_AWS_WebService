@@ -1,5 +1,7 @@
 package com.mjmj.book.springboot.config.auth;
 
+import com.mjmj.book.springboot.config.auth.dto.OAuthAttributes;
+import com.mjmj.book.springboot.config.auth.dto.SessionUser;
 import com.mjmj.book.springboot.domain.user.User;
 import com.mjmj.book.springboot.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +32,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
 
-        OAuthAttributes attributes = OAuteAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
+        OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
         User user = saveOrUpdate(attributes);
 
         httpSession.setAttribute("user",new SessionUser(user));
@@ -40,5 +42,12 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 ,attributes.getAttributes()
                 ,attributes.getNameAttributeKey()
         );
+    }
+
+    private User saveOrUpdate(OAuthAttributes attributes){
+        User user = userRepository.findByEmail(attributes.getEmail())
+                .map(entity -> entity.update(attributes.getName(), attributes.getPicture()))
+                .orElse(attributes.toEntity());
+        return userRepository.save(user);
     }
 }
