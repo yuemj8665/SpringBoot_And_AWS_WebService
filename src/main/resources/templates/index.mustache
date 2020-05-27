@@ -28,6 +28,11 @@
                     이 또한 역시 컨트롤러를 굳이 만들 필요가 없다.
                     -->
                     <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
+                    <!--
+                    네이버 로그인 URL은 application-oauth.propertise에 등록한 redirect-url 값에 맞춰서 자동으로 등록된다.
+                    /oauth2/authorization까지는 고정이고 마지막 Path만 각 소셜로그인 코드를 사용하면 된다.
+                    여기서는 Naver가 Path가 된다.
+                    -->
                     <a href="/oauth2/authorization/naver" class="btn btn-secondary active" role="button">Naver Login</a>
                 {{/userName}}
             </div>

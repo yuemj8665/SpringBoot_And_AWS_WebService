@@ -1,5 +1,6 @@
 package com.mjmj.book.springboot.web;
 
+import com.mjmj.book.springboot.config.auth.LoginUser;
 import com.mjmj.book.springboot.config.auth.dto.SessionUser;
 import com.mjmj.book.springboot.service.posts.PostsService;
 import com.mjmj.book.springboot.web.dto.PostsResponseDTO;
@@ -28,9 +29,14 @@ public class IndexController {
     private final HttpSession httpSession;
 
     @GetMapping("/")
-    public String index(Model model){
-        model.addAttribute("posts", postsService.findAllDesc());
-        SessionUser user = (SessionUser)httpSession.getAttribute("user");
+    public String index(Model model, @LoginUser SessionUser user){
+        /**
+         * 기존에 (SessionUser)httpSession.getAttribute("user") 로 가져오던 세션 정보값이 개선되어
+         * 이제는 어느 컨트롤러든지 @LoginUser만 사용하면 세션정보를 가져올 수 있게 되었다.
+         */
+        // model.addAttribute("posts", postsService.findAllDesc());
+        // SessionUser user = (SessionUser)httpSession.getAttribute("user");
+
         if(user != null){ // 유저가 존재한다면 넣고, 없다면 로그인 버튼이 노출된다.
             model.addAttribute("userName",user.getName());
         }
