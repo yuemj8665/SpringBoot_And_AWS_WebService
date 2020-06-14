@@ -38,7 +38,7 @@ public class OAuthAttributes {
      * 들어오는 값이 네이버에서 들어왔으면 네이버로, 그 외에는 구글로 로그인한다.
      */
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String,Object> attributes){
-        if("Naver".equals(registrationId)){
+        if("naver".equals(registrationId)){
             return ofNaver("id",attributes);
         }
         return ofGoogle(userNameAttributeName,attributes);
